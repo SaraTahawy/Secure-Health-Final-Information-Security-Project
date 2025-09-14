@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Medical History{% endblock %}
+{% block content %}
+<h1 class="mb-4">My Medical History</h1>
+
+{% if records %}
+<div class="accordion" id="medicalHistoryAccordion">
+    {% for record in records %}
+    <div class="card mb-2">
+        <div class="card-header bg-light" id="heading{{ record.id }}">
+            <h2 class="mb-0">
+                <button class="btn btn-link btn-block text-left {% if loop.index != 1 %}collapsed{% endif %}" type="button" data-toggle="collapse" data-target="#collapse{{ record.id }}" aria-expanded="{% if loop.index == 1 %}true{% else %}false{% endif %}" aria-controls="collapse{{ record.id }}">
+                    Record #{{ record.id }} - Date: {{ record.record_date.strftime('%Y-%m-%d %H:%M') }} (by Dr. {{ record.doctor.user.full_name | e }})
+                </button>
+            </h2>
+        </div>
+        <div id="collapse{{ record.id }}" class="collapse {% if loop.index == 1 %}show{% endif %}" aria-labelledby="heading{{ record.id }}" data-parent="#medicalHistoryAccordion">
+            <div class="card-body">
+                <h5>Diagnosis:</h5>
+                <p>{{ record.decrypted_diagnosis | e }}</p>
+                
+                {% if record.decrypted_prescription %}
+                <h5>Prescription:</h5>
+                <p>{{ record.decrypted_prescription | e }}</p>
+                {% else %}
+                <p class="text-muted">No prescription for this record.</p>
+                {% endif %}
+                
+                {% if record.decrypted_notes %}
+                <h5>Notes:</h5>
+                <p>{{ record.decrypted_notes | e }}</p>
+                {% else %}
+                <p class="text-muted">No additional notes for this record.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<div class="alert alert-info" role="alert">
+    No medical history records found for your account.
+</div>
+{% endif %}
+{% endblock %}

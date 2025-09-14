@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Error {{ error_code }}{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 text-center mt-5">
+        <span class="display-1 text-danger" aria-label="Error Icon" style="font-size:5rem;">&#9888;</span>
+        <h1 class="display-4 text-danger mt-3">{{ error_code }} - {{ error_message | e }}</h1>
+        <p class="lead mb-3">We're sorry, but something went wrong or the page you requested could not be found.</p>
+        <div class="alert alert-warning" role="alert">
+            <strong>Security Notice:</strong> For your protection, do not enter sensitive information on unknown pages. If you believe this is an error, please contact support.
+        </div>
+        <a href="{{ url_for('auth.home') }}" class="btn btn-primary btn-lg mt-3" role="button">Return to Home</a>
+        {% if current_user %}
+        <p class="mt-4">You might want to <a href="{{ url_for('auth.logout') }}">log out</a> and try again.</p>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}Patient Dashboard{% endblock %}
+{% block content %}
+<h1 class="mb-4">Patient Dashboard</h1>
+
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title mb-0">Welcome, {{ patient_user.full_name | e }}!</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Email:</strong> {{ patient_user.email | e }}</p>
+                <p><strong>Date of Birth:</strong> {{ patient_profile.date_of_birth.strftime('%Y-%m-%d') if patient_profile.date_of_birth else 'N/A' }}</p>
+                <p><strong>Gender:</strong> {{ patient_profile.gender | e if patient_profile.gender else 'N/A' }}</p>
+                <p><strong>Phone:</strong> {{ patient_profile.phone_number | e if patient_profile.phone_number else 'N/A' }}</p>
+                <hr>
+                <a href="{{ url_for('patient.edit_profile') }}" class="btn btn-info btn-block">Edit My Profile</a>
+                <a href="{{ url_for('patient.change_password') }}" class="btn btn-secondary btn-block mt-2">Change Password</a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-info text-white">
+                <h5 class="card-title mb-0">Upcoming Appointments</h5>
+            </div>
+            <div class="card-body">
+                {% if upcoming_appointments %}
+                <ul class="list-group list-group-flush">
+                    {% for appointment in upcoming_appointments %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <div>
+                            <strong>Doctor:</strong> {{ appointment.doctor.user.full_name | e }}<br>
+                            <strong>Date:</strong> {{ appointment.appointment_date.strftime('%Y-%m-%d %H:%M') }}<br>
+                            <strong>Reason:</strong> {{ appointment.reason | e }}
+                        </div>
+                        <span class="badge badge-{% if appointment.status == 'confirmed' %}success{% elif appointment.status == 'pending' %}warning{% endif %}">
+                            {{ appointment.status | capitalize }}
+                        </span>
+                    </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p class="card-text text-muted">No upcoming appointments.</p>
+                <a href="{{ url_for('patient.book_appointment') }}" class="btn btn-outline-primary btn-block mt-3">Book a New Appointment</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12 mb-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-success text-white">
+                <h5 class="card-title mb-0">Recent Prescriptions</h5>
+            </div>
+            <div class="card-body">
+                {% if recent_prescriptions %}
+                <ul class="list-group list-group-flush">
+                    {% for record in recent_prescriptions %}
+                    <li class="list-group-item">
+                        <strong>Date:</strong> {{ record.record_date.strftime('%Y-%m-%d') }}<br>
+                        <strong>Doctor:</strong> {{ record.doctor.user.full_name | e }}<br>
+                        <strong>Prescription:</strong> {{ record.decrypted_prescription | e | truncate(100) }}
+                        <a href="{{ url_for('patient.view_prescriptions') }}" class="btn btn-sm btn-outline-info ml-2">View Full Prescription</a>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <a href="{{ url_for('patient.view_prescriptions') }}" class="btn btn-outline-primary btn-block mt-3">View All Prescriptions</a>
+                {% else %}
+                <p class="card-text text-muted">No recent prescriptions found.</p>
+                <a href="{{ url_for('patient.view_medical_history') }}" class="btn btn-outline-primary btn-block mt-3">View Full Medical History</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

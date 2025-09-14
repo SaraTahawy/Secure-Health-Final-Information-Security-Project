@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}Admin Dashboard{% endblock %}
+{% block content %}
+<h1 class="mb-4">Admin Dashboard</h1>
+
+<div class="row">
+    <div class="col-md-3 mb-4">
+        <div class="card text-white bg-info shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Total Users</h5>
+                <p class="card-text display-4">{{ total_users }}</p>
+                <a href="{{ url_for('admin.manage_users') }}" class="text-white stretched-link">Manage Users <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-4">
+        <div class="card text-white bg-success shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Total Doctors</h5>
+                <p class="card-text display-4">{{ total_doctors }}</p>
+                <a href="{{ url_for('admin.manage_users') }}" class="text-white stretched-link">Manage Doctors <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-4">
+        <div class="card text-white bg-warning shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Total Patients</h5>
+                <p class="card-text display-4">{{ total_patients }}</p>
+                <a href="{{ url_for('admin.manage_users') }}" class="text-white stretched-link">Manage Patients <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-4">
+        <div class="card text-white bg-danger shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Total Appointments</h5>
+                <p class="card-text display-4">{{ total_appointments }}</p>
+                <a href="{{ url_for('admin.audit_logs') }}" class="text-white stretched-link">View Logs <i class="fas fa-arrow-circle-right"></i></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-secondary text-white">
+                <h5 class="card-title mb-0">Quick Actions</h5>
+            </div>
+            <div class="list-group list-group-flush">
+                <a href="{{ url_for('admin.manage_users') }}" class="list-group-item list-group-item-action">
+                    <i class="fas fa-users mr-2"></i> Manage All Users
+                </a>
+                <a href="{{ url_for('admin.add_doctor') }}" class="list-group-item list-group-item-action">
+                    <i class="fas fa-user-md mr-2"></i> Add New Doctor
+                </a>
+                <a href="{{ url_for('admin.audit_logs') }}" class="list-group-item list-group-item-action">
+                    <i class="fas fa-clipboard-list mr-2"></i> View Audit Logs
+                </a>
+                <a href="{{ url_for('admin.view_all_medical_records') }}" class="list-group-item list-group-item-action">
+                    <i class="fas fa-file-medical mr-2"></i> View All Medical Records
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm">
+            <div class="card-header bg-dark text-white">
+                <h5 class="card-title mb-0">System Information</h5>
+            </div>
+            <div class="card-body">
+                <p><strong>Admin User:</strong> {{ admin_user.full_name | e }} ({{ admin_user.email | e }})</p>
+                <p><strong>Current Time:</strong> {{ 'now' | datetimeformat }}</p>
+                <p class="text-muted">This dashboard provides an overview of system activity and allows for core administrative tasks.</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

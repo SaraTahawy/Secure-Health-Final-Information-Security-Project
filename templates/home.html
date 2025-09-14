@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<div class="jumbotron text-center">
+    <h1 class="display-4">Welcome to Secure Health</h1>
+    <p class="lead">Your security-focused medical appointment and records system.</p>
+    <hr class="my-4">
+    <p>This application simulates a real-world environment for cyber security students to explore and defend against cyber threats.</p>
+    {% if not current_user %}
+    <p>
+        <a class="btn btn-primary btn-lg" href="{{ url_for('auth.login') }}" role="button">Login</a>
+        <a class="btn btn-secondary btn-lg" href="{{ url_for('auth.register') }}" role="button">Register as Patient</a>
+    </p>
+    {% else %}
+    <p class="mt-4">
+        You are logged in as <strong>{{ current_user.full_name | e }}</strong> (Role: {{ current_role | capitalize }}).
+        Proceed to your dashboard:
+    </p>
+    <p>
+        {% if current_role == 'admin' %}
+            <a class="btn btn-info btn-lg" href="{{ url_for('admin.dashboard') }}" role="button">Go to Admin Dashboard</a>
+        {% elif current_role == 'doctor' %}
+            <a class="btn btn-info btn-lg" href="{{ url_for('doctor.dashboard') }}" role="button">Go to Doctor Dashboard</a>
+        {% elif current_role == 'patient' %}
+            <a class="btn btn-info btn-lg" href="{{ url_for('patient.dashboard') }}" role="button">Go to Patient Dashboard</a>
+        {% endif %}
+    </p>
+    {% endif %}
+</div>
+{% endblock %}

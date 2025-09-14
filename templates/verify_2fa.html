@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Verify 2FA{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card mt-5 shadow-lg">
+            <div class="card-header bg-primary text-white text-center">
+                <h3 class="card-title mb-0">Verify Two-Factor Authentication</h3>
+            </div>
+            <div class="card-body p-4 text-center">
+                <p class="mb-4">Please enter the 6-digit code from your Google Authenticator app for <strong>{{ email | e }}</strong>.</p>
+                <form method="POST" action="{{ url_for('auth.verify_2fa') }}">
+                    <div class="form-group mb-4">
+                        <label for="otp_code" class="form-label">2FA Code:</label>
+                        <input type="text" class="form-control form-control-lg text-center" id="otp_code" name="otp_code" required autofocus maxlength="6" pattern="\d{6}" title="Please enter a 6-digit code">
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">Verify</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

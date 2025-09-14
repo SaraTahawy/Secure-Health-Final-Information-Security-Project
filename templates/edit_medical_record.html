@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Edit Medical Record{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card mt-4 shadow-lg">
+            <div class="card-header bg-warning text-white text-center">
+                <h3 class="card-title mb-0">Edit Medical Record #{{ record.id }}</h3>
+            </div>
+            <div class="card-body p-4">
+                <p class="text-muted">For Patient: {{ record.patient.user.full_name | e }} ({{ record.patient.user.email | e }})</p>
+                <p class="text-muted">Created by: Dr. {{ record.doctor.user.full_name | e }} on {{ record.record_date.strftime('%Y-%m-%d %H:%M') }}</p>
+                <hr>
+                <form method="POST">
+                    <div class="form-group mb-3">
+                        <label for="diagnosis" class="form-label">Diagnosis <span class="text-danger">*</span></label>
+                        <textarea class="form-control" id="diagnosis" name="diagnosis" rows="5" required>{{ record.decrypted_diagnosis | e }}</textarea>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="prescription" class="form-label">Prescription</label>
+                        <textarea class="form-control" id="prescription" name="prescription" rows="5">{{ record.decrypted_prescription | e }}</textarea>
+                    </div>
+                    <div class="form-group mb-4">
+                        <label for="notes" class="form-label">Notes</label>
+                        <textarea class="form-control" id="notes" name="notes" rows="5">{{ record.decrypted_notes | e }}</textarea>
+                    </div>
+                    <button type="submit" class="btn btn-warning btn-lg btn-block">Update Record</button>
+                </form>
+                <div class="text-center mt-4">
+                    {% if current_role == 'doctor' %}
+                        <a href="{{ url_for('doctor.view_patient_records', patient_id=record.patient.id) }}" class="btn btn-secondary">Back to Patient Records</a>
+                    {% elif current_role == 'admin' %}
+                        <a href="{{ url_for('admin.view_all_medical_records') }}" class="btn btn-secondary">Back to All Medical Records</a>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

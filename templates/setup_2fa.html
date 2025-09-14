@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+{% block title %}Setup 2FA{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card mt-5 shadow-lg">
+            <div class="card-header bg-primary text-white text-center">
+                <h3 class="card-title mb-0">Setup Two-Factor Authentication</h3>
+            </div>
+            <div class="card-body p-4 text-center">
+                <p class="mb-4">To secure your account, please set up Two-Factor Authentication using an authenticator app (e.g., Google Authenticator, Authy).</p>
+                <p class="lead"><strong>Step 1: Scan this QR Code</strong></p>
+                <div class="mb-4 d-flex justify-content-center">
+                    <img src="data:image/png;base64,{{ qr_code | e }}" alt="QR Code for 2FA setup" class="img-fluid" style="max-width: 250px;">
+                </div>
+                <p class="lead"><strong>Step 2: Or, Manually Enter This Key</strong></p>
+                <div class="alert alert-info font-weight-bold selectable-text" role="alert">
+                    {{ secret | e }}
+                </div>
+                <small class="text-muted mb-4 d-block">Open your authenticator app, add a new account, and either scan the QR code or enter the key manually.</small>
+
+                <p class="lead"><strong>Step 3: Verify Your Setup</strong></p>
+                <form method="POST" action="{{ url_for('auth.setup_2fa') }}">
+                    <div class="form-group mb-4">
+                        <label for="otp_code" class="form-label">Enter the 6-digit code from your authenticator app:</label>
+                        <input type="text" class="form-control form-control-lg text-center" id="otp_code" name="otp_code" required autofocus maxlength="6" pattern="\d{6}" title="Please enter a 6-digit code">
+                    </div>
+                    <button type="submit" class="btn btn-success btn-lg btn-block">Verify and Enable 2FA</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+    // Simple script to make the secret key easily selectable
+    document.querySelectorAll('.selectable-text').forEach(item => {
+        item.addEventListener('click', () => {
+            const range = document.createRange();
+            range.selectNode(item);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            try {
+                document.execCommand('copy');
+                alert('Secret key copied to clipboard!');
+            } catch (err) {
+                console.error('Failed to copy text: ', err);
+            }
+        });
+    });
+</script>
+{% endblock %}

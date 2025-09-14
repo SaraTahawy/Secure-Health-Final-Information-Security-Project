@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block title %}Choose Role{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card mt-5 shadow-lg">
+            <div class="card-header bg-primary text-white text-center">
+                <h3 class="card-title mb-0">Choose Your Login Role</h3>
+            </div>
+            <div class="card-body p-4">
+                <p class="text-center text-muted mb-4">Please select the role you wish to log in as:</p>
+                <form method="POST" action="{{ url_for('auth.choose_role') }}">
+                    <div class="form-group mb-4">
+                        <label for="role" class="form-label font-weight-bold">I am a:</label>
+                        <select class="form-control form-control-lg" id="role" name="role" required>
+                            <option value="">-- Select Role --</option>
+                            <option value="admin">Admin</option>
+                            <option value="doctor">Doctor</option>
+                            <option value="patient">Patient</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">Continue to Login</button>
+                </form>
+                <div class="text-center mt-4">
+                    <p class="text-muted">New to Secure Health? <a href="{{ url_for('auth.register') }}" class="text-primary font-weight-bold">Register as a Patient</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

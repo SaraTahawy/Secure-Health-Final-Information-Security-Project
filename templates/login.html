@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}Login{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card mt-5 shadow-lg">
+            <div class="card-header bg-primary text-white text-center">
+                <h3 class="card-title mb-0">Login as {{ selected_role | capitalize if selected_role else 'User' }}</h3>
+            </div>
+            <div class="card-body p-4">
+                <form method="POST" action="{{ url_for('auth.login') }}">
+                     <div class="form-group mb-3">
+                        <label for="role" class="form-label">Select User Type</label>
+                        <select class="form-control" id="role" name="role" required>
+                            <option value="" disabled selected>Select your role</option>
+                            <option value="patient">Patient</option>
+                            <option value="doctor">Doctor</option>
+                            <option value="admin">Admin</option>
+                        </select>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="email" class="form-label">Email address</label>
+                        <input type="email" class="form-control" id="email" name="email" required autofocus>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="password" class="form-label">Password</label>
+                        <input type="password" class="form-control" id="password" name="password" required>
+                    </div>
+                    <div class="form-group mb-4">
+                        <label for="otp_code" class="form-label">2FA Code (Not required for Patient)</label>
+                        <input type="text" class="form-control" id="otp_code" name="otp_code" placeholder="Enter 6-digit code">
+                        <small class="form-text text-muted">Enter your Google Authenticator code if 2FA is enabled for your account.</small>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">Login</button>
+                </form>
+                <hr class="my-4">
+                <div class="text-center mb-3">
+                    <p class="text-muted">Or login with:</p>
+                  
+                   <a href="{{ url_for('auth.github_login') }}" class="btn btn-outline-dark btn-sm m-1">
+                        <img src="https://img.icons8.com/brands/16/000000/github.png" alt="GitHub icon"> Login with GitHub
+                    </a>
+                </div>
+                <div class="text-center mt-3">
+                    <p class="text-muted">Don't have an account? <a href="{{ url_for('auth.register') }}" class="text-primary font-weight-bold">Register as Patient</a></p>
+                   
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

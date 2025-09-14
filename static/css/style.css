@@ -1,0 +1,99 @@
+/* Custom styles for Secure Health app */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+}
+
+.navbar {
+    margin-bottom: 20px;
+}
+
+.jumbotron {
+    background-color: #e9ecef;
+    padding: 2rem;
+    border-radius: .3rem;
+}
+
+.card {
+    border: none;
+    border-radius: 0.75rem;
+    overflow: hidden;
+}
+
+.card-header {
+    border-bottom: 1px solid rgba(0, 0, 0, .125);
+    border-top-left-radius: 0.75rem !important;
+    border-top-right-radius: 0.75rem !important;
+}
+
+.shadow-lg {
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, .175) !important;
+}
+
+.btn-primary, .bg-primary {
+    background-color: #007bff !important;
+    border-color: #007bff !important;
+}
+
+.btn-info, .bg-info {
+    background-color: #17a2b8 !important;
+    border-color: #17a2b8 !important;
+}
+
+.btn-success, .bg-success {
+    background-color: #28a745 !important;
+    border-color: #28a745 !important;
+}
+
+.btn-warning, .bg-warning {
+    background-color: #ffc107 !important;
+    border-color: #ffc107 !important;
+}
+
+.btn-danger, .bg-danger {
+    background-color: #dc3545 !important;
+    border-color: #dc3545 !important;
+}
+
+.btn-secondary, .bg-secondary {
+    background-color: #6c757d !important;
+    border-color: #6c757d !important;
+}
+
+.btn-dark, .bg-dark {
+    background-color: #343a40 !important;
+    border-color: #343a40 !important;
+}
+
+.alert-info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border-color: #bee5eb;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border-color: #c3e6cb;
+}
+
+.alert-danger {
+    background-color: #f8d7da;
+    color: #721c24;
+    border-color: #f5c6cb;
+}
+
+.alert-warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border-color: #ffeeba;
+}
+
+/* Specific styles for 2FA QR code and secret text */
+.selectable-text {
+    background-color: #e9ecef;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: copy; /* Indicate that it's copyable */
+    word-break: break-all; /* Ensures long keys wrap */
+}
